@@ -5,6 +5,7 @@ import com.pluralsight.repository.BookDao;
 import com.pluralsight.repository.Dao;
 
 import java.util.List;
+import java.util.Optional;
 
 public class App
 {
@@ -15,6 +16,15 @@ public class App
         List<Book> books = bookDao.findAll();
 
         for(Book book: books){
+            System.out.println("Id: " + book.getId());
+            System.out.println("Title: " + book.getTitle());
+        }
+
+        // Better way to do above
+        Optional<Book> optBook = bookDao.findById(1);
+        if(optBook.isPresent()){
+            Book book = optBook.get();
+
             System.out.println("Id: " + book.getId());
             System.out.println("Title: " + book.getTitle());
         }
