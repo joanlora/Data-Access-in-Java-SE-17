@@ -28,7 +28,7 @@ public class App
             System.out.println("Id: " + book.getId());
             System.out.println("Title: " + book.getTitle());
 
-            book.setTitle("Effective Java: Second Edition");
+            book.setTitle("Effective Java: Joan Edition");
 
             bookDao.update(book);
         }

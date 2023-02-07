@@ -81,7 +81,9 @@ public class BookDao extends AbstractDao implements Dao<Book> {
 
         try(Connection con = getConnection();
             PreparedStatement prepStmt = con.prepareStatement(sql)){
-
+            prepStmt.setString(1, book.getTitle());
+            prepStmt.setLong(2, book.getId());
+            prepStmt.executeUpdate();
         } catch(SQLException sqe) {sqe.printStackTrace();}
         return book;
     }
