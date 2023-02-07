@@ -9,4 +9,8 @@ public interface Dao <T>{
     Optional<T> findById(long id);
 
     List<T> findAll();
+
+    T create(T t); // Create in CRUD function
+
+    T update(T t);
 }

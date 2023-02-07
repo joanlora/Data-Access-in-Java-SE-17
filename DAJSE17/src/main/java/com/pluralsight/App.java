@@ -27,6 +27,17 @@ public class App
 
             System.out.println("Id: " + book.getId());
             System.out.println("Title: " + book.getTitle());
+
+            book.setTitle("Effective Java: Second Edition");
+
+            bookDao.update(book);
         }
+
+        /*Book newBook = new Book();
+        newBook.setTitle("The Catcher in The Rye");
+        newBook = bookDao.create(newBook);
+
+        System.out.println("Id: " + newBook.getId());
+        System.out.println("Title: " + newBook.getTitle());*/
     }
 }

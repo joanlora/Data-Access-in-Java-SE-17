@@ -19,7 +19,7 @@ public class BookDao extends AbstractDao implements Dao<Book> {
             try (ResultSet rset = prepStmt.executeQuery()) {
                 Book resBook = new Book();
 
-                if(rset.next()){
+                if (rset.next()) {
                     resBook.setId(rset.getLong("ID"));
                     resBook.setTitle(rset.getString("TITLE"));
                 }
@@ -52,5 +52,37 @@ public class BookDao extends AbstractDao implements Dao<Book> {
             sqe.printStackTrace();
         }
         return books;
+    }
+
+    @Override
+    public Book create(Book book) {
+        String sql = "INSERT INTO BOOK (TITLE) VALUES (?)";
+
+        try (
+                Connection con = getConnection();
+                PreparedStatement prepStmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        ) {
+            prepStmt.setString(1, book.getTitle());
+            prepStmt.executeUpdate();
+
+            try (ResultSet genKeys = prepStmt.getGeneratedKeys()){
+                if(genKeys.next()){
+                    book.setId(genKeys.getLong(1));
+                }
+            }
+        } catch (SQLException sqe) { sqe.printStackTrace();}
+
+        return book;
+    }
+
+    @Override
+    public Book update(Book book) {
+        String sql = "UPDATE BOOK SET TITLE = ? WHERE ID = ?";
+
+        try(Connection con = getConnection();
+            PreparedStatement prepStmt = con.prepareStatement(sql)){
+
+        } catch(SQLException sqe) {sqe.printStackTrace();}
+        return book;
     }
 }
