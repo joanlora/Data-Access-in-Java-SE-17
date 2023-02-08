@@ -19,8 +19,10 @@ public class App
         for(Book book: books){
             System.out.println("Id: " + book.getId());
             System.out.println("Title: " + book.getTitle());
+            System.out.println("Rating: " + book.getRating());
         }
 
+        /*
         // Better way to do above
         Optional<Book> optBook = bookDao.findById(1);
         if(optBook.isPresent()){

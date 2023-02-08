@@ -34,6 +34,24 @@ public class BookDao extends AbstractDao implements Dao<Book> {
 
     @Override
     public List<Book> findAll() {
+        List<Book> books = Collections.emptyList();
+
+        JdbcQueryTemplate<Book> template = new JdbcQueryTemplate<Book>() {
+            @Override
+            public Book mapItem(ResultSet rset) throws SQLException {
+                Book book = new Book();
+                book.setId(rset.getLong("ID"));
+                book.setTitle(rset.getString("TITLE"));
+                book.setRating(rset.getInt("RATING"));
+                return book;
+            }
+        };
+        books = template.queryForList("SELECT ID, TITLE, RATING FROM BOOK");
+        return books;
+    }
+
+    /*@Override
+    public List<Book> findAll() {
         List<Book> books = new java.util.ArrayList<>(Collections.emptyList());
         String sql = "SELECT * FROM BOOK";
 
@@ -52,7 +70,7 @@ public class BookDao extends AbstractDao implements Dao<Book> {
             sqe.printStackTrace();
         }
         return books;
-    }
+    }*/
 
     @Override
     public Book create(Book book) {
