@@ -6,6 +6,7 @@ import com.pluralsight.repository.Dao;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class App
 {
@@ -39,5 +40,13 @@ public class App
 
         System.out.println("Id: " + newBook.getId());
         System.out.println("Title: " + newBook.getTitle());*/
+
+        books = bookDao.findAll();
+
+        List<Book> updateEntries =
+                books.stream()
+                        .peek(b -> b.setRating(3))
+                        .collect(Collectors.toList());
+        bookDao.update(updateEntries);
     }
 }

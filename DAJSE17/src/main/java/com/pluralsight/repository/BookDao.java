@@ -65,12 +65,14 @@ public class BookDao extends AbstractDao implements Dao<Book> {
             prepStmt.setString(1, book.getTitle());
             prepStmt.executeUpdate();
 
-            try (ResultSet genKeys = prepStmt.getGeneratedKeys()){
-                if(genKeys.next()){
+            try (ResultSet genKeys = prepStmt.getGeneratedKeys()) {
+                if (genKeys.next()) {
                     book.setId(genKeys.getLong(1));
                 }
             }
-        } catch (SQLException sqe) { sqe.printStackTrace();}
+        } catch (SQLException sqe) {
+            sqe.printStackTrace();
+        }
 
         return book;
     }
@@ -79,12 +81,39 @@ public class BookDao extends AbstractDao implements Dao<Book> {
     public Book update(Book book) {
         String sql = "UPDATE BOOK SET TITLE = ? WHERE ID = ?";
 
-        try(Connection con = getConnection();
-            PreparedStatement prepStmt = con.prepareStatement(sql)){
+        try (Connection con = getConnection();
+             PreparedStatement prepStmt = con.prepareStatement(sql)) {
             prepStmt.setString(1, book.getTitle());
             prepStmt.setLong(2, book.getId());
             prepStmt.executeUpdate();
-        } catch(SQLException sqe) {sqe.printStackTrace();}
+        } catch (SQLException sqe) {
+            sqe.printStackTrace();
+        }
         return book;
+    }
+
+    @Override
+    public int[] update(List<Book> books) {
+        int[] records = {};
+        String sql = "UPDATE BOOK SET TITLE = ?, RATING = ? WHERE ID = ?";
+        try (
+                Connection con = getConnection();
+                PreparedStatement prepStmt = con.prepareStatement(sql)) {
+            {
+                for (Book book : books) {
+                    prepStmt.setString(1, book.getTitle());
+                    prepStmt.setInt(2,book.getRating());
+                    prepStmt.setLong(3,book.getId());
+
+                    prepStmt.addBatch();
+                }
+                records = prepStmt.executeBatch();
+            }
+        } catch (SQLException sqe) {
+            sqe.printStackTrace();
+        }
+        return records;
+
+
     }
 }

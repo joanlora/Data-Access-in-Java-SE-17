@@ -13,4 +13,6 @@ public interface Dao <T>{
     T create(T t); // Create in CRUD function
 
     T update(T t);
+
+    int[] update (List<T> t);
 }

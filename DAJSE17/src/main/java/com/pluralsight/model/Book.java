@@ -5,6 +5,16 @@ public class Book {
     private long id;
     private String title;
 
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    private int rating;
+
     public long getId() {
         return id;
     }
