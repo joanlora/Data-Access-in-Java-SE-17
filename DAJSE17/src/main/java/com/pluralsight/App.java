@@ -34,6 +34,17 @@ public class App
             bookDao.update(book);
         }
 
+        Book newBook = new Book();
+        newBook.setTitle("The Catcher in The Rye");
+        newBook = bookDao.create(newBook);
+
+        System.out.println("Id: " + newBook.getId());
+        System.out.println("Title: " + newBook.getTitle());
+
+        int numDel = bookDao.delete(newBook);
+
+        System.out.println("Number of records deleted: " + numDel);
+
         /*Book newBook = new Book();
         newBook.setTitle("The Catcher in The Rye");
         newBook = bookDao.create(newBook);
@@ -41,12 +52,12 @@ public class App
         System.out.println("Id: " + newBook.getId());
         System.out.println("Title: " + newBook.getTitle());*/
 
-        books = bookDao.findAll();
+        /*books = bookDao.findAll();
 
         List<Book> updateEntries =
                 books.stream()
                         .peek(b -> b.setRating(3))
                         .collect(Collectors.toList());
-        bookDao.update(updateEntries);
+        bookDao.update(updateEntries);*/
     }
 }
